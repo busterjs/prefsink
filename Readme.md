@@ -9,7 +9,9 @@ user's home directory, environment variables and default values.
         /* ... */
     });
 
-Preferences will use the first available of the following files:
+Preferences will use the first available of the following files (`~/` denotes
+'home directory', which on Windows means the directory specified by
+`USERPROFILE`):
 
 1. `~/.myproject.d/index.js` (lets the user organize all related files in one
    directory)
