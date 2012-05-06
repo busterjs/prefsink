@@ -1,0 +1,19 @@
+{
+    "name": "preferences",
+    "version": "0.1.0",
+    "description": "User-provided preferences for your Node program through ~/.<your-project> and environment variables",
+    "homepage": "http://busterjs.org/docs/preferences",
+    "author": {
+        "name": "Christian Johansen",
+        "email": "christian@cjohansen.no",
+        "url": "http://cjohansen.no"
+    },
+    "main": "./lib/preferences",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/busterjs/preferences.git"
+    },
+    "devDependencies": {
+        "buster": "*"
+    }
+}
