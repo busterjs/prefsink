@@ -34,14 +34,14 @@ Given one of those modules, Preferences uses the following property lookup:
 
     var preferences = require("preferences");
 
-## `preferences.findFile(namespace, callback(err, fileName))`
+### `preferences.findFile(namespace, callback(err, fileName))`
 
 Finds the filename for the preferred preference module according to the lookup
 described above. Yields `null` if none of the files are available. The error
 object is currently not being used as any error will simply result in a `null`
 file name.
 
-## `preferences.create(namespace[, prefs[, source]]) //=> prefsJar`
+### `preferences.create(namespace[, prefs[, source]]) //=> prefsJar`
 
 Creates a preference "jar" (see API below).
 
@@ -54,7 +54,7 @@ properties, properties on this object will be preferred.
 `source` is a string that reveals which source `prefs` were loaded from. It's
 simply exposed as `prefsJar.source`.
 
-## `preferences.load(namespace, callback(err, prefsJar))`
+### `preferences.load(namespace, callback(err, prefsJar))`
 
 Figures out which file to use, loads its contents and creates a preference
 jar that is passed to the callback. The error object is used when `require`-ing
