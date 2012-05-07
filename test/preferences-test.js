@@ -8,21 +8,34 @@ function path(p) {
     return Path.join(home, p);
 }
 
+function isFile(fileName) {
+    var stat = {
+        isFile: function () { return true; }
+    };
+    fs.stat.withArgs(fileName).yields(null, stat);
+    fs.statSync.withArgs(fileName).returns(stat);
+    return fileName;
+}
+
 function fileNotFound(fileName) {
-    fs.stat.withArgs(fileName).yields({
+    var error = {
         name: "Error",
         message: "ENOENT, no such file or directory '" + fileName + "'",
         errno: 34,
         code: "ENOENT",
         path: fileName
-    });
+    };
+    fs.stat.withArgs(fileName).yields(error);
+    fs.statSync.throws(error);
 }
 
 buster.testCase("Preferences", {
     setUp: function () {
-        this.stub(fs, "stat").yields(null, {
+        var stat = {
             isFile: this.stub().returns(true)
-        });
+        };
+        this.stub(fs, "stat").yields(null, stat);
+        this.stub(fs, "statSync").returns(stat);
     },
 
     "findFile": {
@@ -103,7 +116,27 @@ buster.testCase("Preferences", {
         }
     },
 
+    "findFileSync": {
+        "finds ~/.myproject.d/index.js synchronously": function () {
+            var file = path(".myproject.d/index.js");
+            isFile(file);
+            assert.equals(prefs.findFileSync("myproject"), file);
+        },
+
+        "finds ~/.myproject.js synchronously": function () {
+            fileNotFound(path(".myproject.d/index.js"));
+            var file = path(".myproject.js");
+            isFile(file);
+            assert.equals(prefs.findFileSync("myproject"), file);
+        }
+    },
+
     "loading properties": {
+        setUp: function () {
+            // Used internally by node in require()
+            fs.statSync.restore();
+        },
+
         "finds file for project": function () {
             this.stub(prefs, "findFile");
             prefs.load("buster", function () {});
@@ -144,6 +177,16 @@ buster.testCase("Preferences", {
             prefs.load("sinon", done(function (err, preferences) {
                 assert.isObject(err);
             }));
+        }
+    },
+
+    "loading properties sync": {
+        "returns preference jar": function () {
+            var fixture = Path.join(__dirname, "fixture.js");
+            this.stub(prefs, "findFileSync").returns(fixture);
+            var jar = prefs.loadSync("buster");
+
+            assert.equals(jar.get("id"), 42);
         }
     },
 
