@@ -22,6 +22,11 @@ Preferences will use the first available of the following files (`~/` denotes
 Preferences expects the settings file to be a node module that can be
 `require`'d.
 
+If you want Preferences to look for other files, or with a different ordering,
+just set `preferences.locations` to an array of desired paths. The array should
+contain full paths, optionally with `{namespace}` which will be replaced with
+the namespace.
+
 ## Preference property lookup
 
     prefs.get("id", 42);
@@ -34,7 +39,21 @@ Given one of those modules, Preferences uses the following property lookup:
 
 # API
 
-    var preferences = require("preferences");
+### `preferences.home`
+
+String, contains the path to where Preferences thinks the user's home directory
+is.
+
+### `preferences.locations`
+
+Array of strings. The locations Preferences will attempt to load, in preferred
+order. Default value is
+
+    exports.locations = [
+        Path.join(exports.home, ".{namespace}.d", "index.js"),
+        Path.join(exports.home, ".{namespace}.js"),
+        Path.join(exports.home, ".{namespace}")
+    ];
 
 ### `preferences.findFile(namespace, callback(err, fileName))`
 
@@ -42,6 +61,10 @@ Finds the filename for the preferred preference module according to the lookup
 described above. Yields `null` if none of the files are available. The error
 object is currently not being used as any error will simply result in a `null`
 file name.
+
+### `preferences.findFileSync(namespace)`
+
+Sync version
 
 ### `preferences.create(namespace[, prefs[, source]]) //=> prefsJar`
 
@@ -61,6 +84,10 @@ simply exposed as `prefsJar.source`.
 Figures out which file to use, loads its contents and creates a preference
 jar that is passed to the callback. The error object is used when `require`-ing
 the preference file fails (i.e. when the file exists but is not loadable).
+
+### `preferences.loadSync(namespace)`
+
+Sync version
 
 ## `preferenceJar` API
 

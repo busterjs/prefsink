@@ -36,6 +36,11 @@ buster.testCase("Preferences", {
         };
         this.stub(fs, "stat").yields(null, stat);
         this.stub(fs, "statSync").returns(stat);
+        this.locations = prefs.locations;
+    },
+
+    tearDown: function () {
+        prefs.locations = this.locations;
     },
 
     "findFile": {
@@ -113,6 +118,18 @@ buster.testCase("Preferences", {
             prefs.findFile("buster", done(function (err, file) {
                 assert.equals(file, null);
             }));
+        },
+
+        "tries custom paths": function (done) {
+            fileNotFound(path(".hola"));
+            fileNotFound(Path.join("tmp", "config"));
+            prefs.locations = [path(".hola"), Path.join("tmp", "config")];
+
+            prefs.findFile("buster", done(function (err, file) {
+                assert.calledTwice(fs.stat);
+                assert.calledWith(fs.stat, path(".hola"));
+                assert.calledWith(fs.stat, Path.join("tmp", "config"));
+            }));
         }
     },
 
@@ -128,6 +145,17 @@ buster.testCase("Preferences", {
             var file = path(".myproject.js");
             isFile(file);
             assert.equals(prefs.findFileSync("myproject"), file);
+        },
+
+        "tries custom paths": function () {
+            fileNotFound(path(".hola"));
+            fileNotFound(Path.join("tmp", "config"));
+            prefs.locations = [path(".hola"), Path.join("tmp", "config")];
+
+            prefs.findFileSync("buster");
+            assert.calledTwice(fs.statSync);
+            assert.calledWith(fs.statSync, path(".hola"));
+            assert.calledWith(fs.statSync, Path.join("tmp", "config"));
         }
     },
 
