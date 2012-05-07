@@ -1,6 +1,6 @@
 {
     "name": "preferences",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "User-provided preferences for your Node program through ~/.<your-project> and environment variables",
     "homepage": "http://busterjs.org/docs/preferences",
     "author": {
