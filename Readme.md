@@ -1,5 +1,7 @@
 # Preferences
 
+[![Build status](https://secure.travis-ci.org/busterjs/preferences.png?branch=master)](http://travis-ci.org/busterjs/preferences)
+
 Manage user-provided preferences for your Node programs through a file in the
 user's home directory, environment variables and default values.
 
