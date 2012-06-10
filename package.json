@@ -1,17 +1,20 @@
 {
-    "name": "preferences",
-    "version": "0.2.0",
+    "name": "prefsink",
+    "version": "0.1.0",
     "description": "User-provided preferences for your Node program through ~/.<your-project> and environment variables",
-    "homepage": "http://busterjs.org/docs/preferences",
+    "homepage": "http://busterjs.org/docs/prefsink",
     "author": {
         "name": "Christian Johansen",
         "email": "christian@cjohansen.no",
         "url": "http://cjohansen.no"
     },
-    "main": "./lib/preferences",
+    "main": "./lib/prefsink",
+    "scripts": {
+        "test": "./node_modules/buster/bin/buster-test"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/busterjs/preferences.git"
+        "url": "https://github.com/busterjs/prefsink.git"
     },
     "devDependencies": {
         "buster": "*"

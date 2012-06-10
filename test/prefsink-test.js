@@ -1,6 +1,6 @@
 var buster = require("buster");
 var fs = require("fs");
-var prefs = require("../lib/preferences");
+var prefs = require("../lib/prefsink");
 var Path = require("path");
 var home = process.env.USERPROFILE || process.env.HOME;
 

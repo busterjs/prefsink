@@ -1,17 +1,17 @@
-# Preferences
+# Prefsink
 
-[![Build status](https://secure.travis-ci.org/busterjs/preferences.png?branch=master)](http://travis-ci.org/busterjs/preferences)
+[![Build status](https://secure.travis-ci.org/busterjs/prefsink.png?branch=master)](http://travis-ci.org/busterjs/prefsink)
 
 Manage user-provided preferences for your Node programs through a file in the
 user's home directory, environment variables and default values.
 
 ## Preference modules
 
-    preferences.load("myproject", function (err, prefs) {
+    prefsink.load("myproject", function (err, prefs) {
         /* ... */
     });
 
-Preferences will use the first available of the following files (`~/` denotes
+Prefsink will use the first available of the following files (`~/` denotes
 'home directory', which on Windows means the directory specified by
 `USERPROFILE`):
 
@@ -21,11 +21,11 @@ Preferences will use the first available of the following files (`~/` denotes
    etc)
 3. `~/.myproject` (iconic Unix style preference file)
 
-Preferences expects the settings file to be a node module that can be
+Prefsink expects the settings file to be a node module that can be
 `require`'d.
 
-If you want Preferences to look for other files, or with a different ordering,
-just set `preferences.locations` to an array of desired paths. The array should
+If you want Prefsink to look for other files, or with a different ordering,
+just set `prefsink.locations` to an array of desired paths. The array should
 contain full paths, optionally with `{namespace}` which will be replaced with
 the namespace.
 
@@ -33,7 +33,7 @@ the namespace.
 
     prefs.get("id", 42);
 
-Given one of those modules, Preferences uses the following property lookup:
+Given one of those modules, Prefsink uses the following property lookup:
 
 1. Does the preference module export `id`? Use that
 2. Is `process.env.MYPROJECT_ID` set? Use that
@@ -41,14 +41,14 @@ Given one of those modules, Preferences uses the following property lookup:
 
 # API
 
-### `preferences.home`
+### `prefsink.home`
 
-String, contains the path to where Preferences thinks the user's home directory
+String, contains the path to where Prefsink thinks the user's home directory
 is.
 
-### `preferences.locations`
+### `prefsink.locations`
 
-Array of strings. The locations Preferences will attempt to load, in preferred
+Array of strings. The locations Prefsink will attempt to load, in preferred
 order. Default value is
 
     exports.locations = [
@@ -57,18 +57,18 @@ order. Default value is
         Path.join(exports.home, ".{namespace}")
     ];
 
-### `preferences.findFile(namespace, callback(err, fileName))`
+### `prefsink.findFile(namespace, callback(err, fileName))`
 
 Finds the filename for the preferred preference module according to the lookup
 described above. Yields `null` if none of the files are available. The error
 object is currently not being used as any error will simply result in a `null`
 file name.
 
-### `preferences.findFileSync(namespace)`
+### `prefsink.findFileSync(namespace)`
 
 Sync version
 
-### `preferences.create(namespace[, prefs[, source]]) //=> prefsJar`
+### `prefsink.create(namespace[, prefs[, source]]) //=> prefsJar`
 
 Creates a preference "jar" (see API below).
 
@@ -81,13 +81,13 @@ properties, properties on this object will be preferred.
 `source` is a string that reveals which source `prefs` were loaded from. It's
 simply exposed as `prefsJar.source`.
 
-### `preferences.load(namespace, callback(err, prefsJar))`
+### `prefsink.load(namespace, callback(err, prefsJar))`
 
 Figures out which file to use, loads its contents and creates a preference
 jar that is passed to the callback. The error object is used when `require`-ing
 the preference file fails (i.e. when the file exists but is not loadable).
 
-### `preferences.loadSync(namespace)`
+### `prefsink.loadSync(namespace)`
 
 Sync version
 
