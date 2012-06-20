@@ -1,6 +1,6 @@
 {
     "name": "prefsink",
-    "version": "0.1.0",
+    "version": "0.2.1",
     "description": "User-provided preferences for your Node program through ~/.<your-project> and environment variables",
     "homepage": "http://busterjs.org/docs/prefsink",
     "author": {
