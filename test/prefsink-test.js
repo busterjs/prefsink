@@ -60,7 +60,7 @@ buster.testCase("Preferences", {
             }));
         },
 
-        "does not yield ~/.buster.d/index.js if it is a directory": function (done) {
+        "does not yield ~/.buster.d/index.js if directory": function (done) {
             fs.stat.withArgs(path(".buster.d/index.js")).yields(null, {
                 isFile: this.stub().returns(false)
             });
@@ -89,7 +89,7 @@ buster.testCase("Preferences", {
             }));
         },
 
-        "uses ~/.buster if .buster.d and .buster.js do not exist": function (done) {
+        "uses ~/.buster if .buster.d/.buster.js don't exist": function (done) {
             fileNotFound(path(".buster.d/index.js"));
             fileNotFound(path(".buster.js"));
 
