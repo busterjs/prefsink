@@ -1,4 +1,6 @@
-var buster = require("buster");
+var buster = require("buster-node");
+var assert = buster.assert;
+var refute = buster.refute;
 var fs = require("fs");
 var prefs = require("../lib/prefsink");
 var Path = require("path");
@@ -274,7 +276,7 @@ buster.testCase("Preferences", {
         "prefers environment variable over default": function () {
             process.env.AWESOME_STUFF = 13;
             var preferences = prefs.create("awesome", {});
-            assert.equals(preferences.get("stuff", 100), 13);
+            assert.equals(preferences.get("stuff", 100), "13");
         }
     }
 });

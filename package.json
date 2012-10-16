@@ -11,13 +11,13 @@
     },
     "main": "./lib/prefsink",
     "scripts": {
-        "test": "./node_modules/buster/bin/buster-test"
+        "test": "node test/prefsink-test.js"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/busterjs/prefsink.git"
     },
     "devDependencies": {
-        "buster": "*"
+        "buster-node": "*"
     }
 }
