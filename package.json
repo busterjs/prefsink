@@ -13,6 +13,7 @@
     "scripts": {
         "test": "node test/prefsink-test.js"
     },
+    "license": "BSD-3-Clause",
     "repository": {
         "type": "git",
         "url": "https://github.com/busterjs/prefsink.git"
